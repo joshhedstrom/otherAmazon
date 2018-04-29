@@ -1,0 +1,23 @@
+{
+  "name": "otherAmazon",
+  "version": "1.0.0",
+  "description": "An Amazon-like storefront using MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshhedstrom/otherAmazon.git"
+  },
+  "keywords": [],
+  "author": "Josh Hedstrom <josh.hedstrom@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshhedstrom/otherAmazon/issues"
+  },
+  "homepage": "https://github.com/joshhedstrom/otherAmazon#readme",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  }
+}
