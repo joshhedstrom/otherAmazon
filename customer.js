@@ -8,14 +8,21 @@ const connection = mysql.createConnection({
 });
 
 function showItems() {
-    connection.query("SELECT * FROM other_amazon_db", (err, res) => {
+    connection.query("SELECT * FROM products", (err, res) => {
         if (err) return console.log(`ERROR: ${err}`);
         console.log(res)
-        // let items = res.map(i => i.item_name)
-        // console.log(items)
-        // connection.end();
+        res.forEach((elem, i) => {
+        	// console.log(elem)
+        	console.log('------------------------------------------------------------------------------');
+        	console.log(`ID# : ${elem.id}`);
+        	console.log(`Item: ${elem.product_name}`);
+        	console.log(`price: ${elem.price}`);
+        	console.log('------------------------------------------------------------------------------');
+        });
+        connection.end();
     })
 }
+showItems();
 
 function updateQuantity(product, stock) {
     connection.query(
