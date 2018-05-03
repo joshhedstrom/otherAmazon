@@ -64,22 +64,23 @@ function getQuantity(id) {
         // console.log(res[0].stock_quantity)
         return res[0].stock_quantity;
     });
-    // connection.end();
+    connection.end();
 }
 
-// getQuantity(4)
-
+function productSelection() {
 showItems()
+    inquirer.prompt([{
+        type: 'input',
+        name: 'productSelection',
+        message: 'What product would you like to buy? Enter the ID!',
 
-inquirer.prompt([{
-    type: 'input',
-    name: 'productSelection',
-    message: 'What product would you like to buy? Enter the ID!',
+    }]).then((answer) => {
+        // console.log(`answer: ${answer}`);
+        // console.log(`productSelection: ${answer.productSelection}`)
+        console.log(getQuantity(answer.productSelection))
+            // console.log('quanity: ', quanity)
 
-}]).then((answer) => {
-    // console.log(`answer: ${answer}`);
-    // console.log(`productSelection: ${answer.productSelection}`)
-    console.log(getQuantity(answer.productSelection))
-    // console.log('quanity: ', quanity)
+    })
+}
 
-})
+productSelection()
