@@ -8,23 +8,55 @@ const connection = mysql.createConnection({
     database: 'other_amazon_db',
 });
 
+let itemArray = [];
+welcome()
 
-function showItems() {
-    connection.query("SELECT * FROM products", (err, res) => {
-        if (err) return console.log(`ERROR: ${err}`);
-        // console.log(res)
-        res.forEach((elem, i) => {
-            // console.log(elem)
-            console.log('------------------------------------------------------------------------------');
-            console.log(`ID# : ${elem.id}`);
-            console.log(`Item: ${elem.product_name}`);
-            console.log(`Department: ${elem.department_name}`);
-            console.log(`price: ${elem.price}`);
-            console.log('------------------------------------------------------------------------------');
-        });
-        // connection.end();
+function quantitySelection() {
+    inquirer.prompt([{
+        name: 'quantitySelection',
+        type: 'input',
+        message: 'How many would you like to buy?'
+    }]).then((answer) => {
+        console.log(answer)
     })
 }
+
+function productSelection() {
+    inquirer.prompt([{
+        name: 'productSelection',
+        type: 'list',
+        choices: itemArray,
+        message: 'What product would you like to buy?'
+    }]).then((answer) => {
+        console.log(answer)
+    })
+}
+
+function welcome() {
+    loadItems();
+    inquirer.prompt([{
+        name: 'welcome',
+        type: 'confirm',
+        message: 'Welcome! Are you ready to buy something?'
+    }]).then((answers) => {
+        if (answers.welcome) {
+            productSelection();
+        } else {
+            console.log('Thanks for coming!')
+        }
+    })
+}
+
+function loadItems() {
+    connection.query("SELECT * FROM products", (err, res) => {
+        if (err) return console.log(`ERROR: ${err}`);
+        res.forEach((elem, i) => {
+            itemArray.push(`${elem.product_name} || Price: $${elem.price}`);
+        });
+        connection.end();
+    })
+}
+// loadItems();
 
 function updateQuantity(id, stock) {
     connection.query(
@@ -38,6 +70,16 @@ function updateQuantity(id, stock) {
             if (err) return console.log(`ERROR: ${err}`);
         }
     );
+    connection.end();
+}
+
+function getQuantity(id) {
+    connection.query('SELECT stock_quantity FROM products WHERE ?', {
+        id: id
+    }, (err, res) => {
+        if (err) return console.log(`ERROR: ${err}`);
+        quantity = res[0].stock_quantity;
+    });
     connection.end();
 }
 
@@ -56,31 +98,3 @@ function addProduct(name, department, price, stock) {
     connection.end();
 }
 
-function getQuantity(id) {
-    connection.query('SELECT stock_quantity FROM products WHERE ?', {
-        id: id
-    }, (err, res) => {
-        if (err) return console.log(`ERROR: ${err}`);
-        // console.log(res[0].stock_quantity)
-        return res[0].stock_quantity;
-    });
-    connection.end();
-}
-
-function productSelection() {
-showItems()
-    inquirer.prompt([{
-        type: 'input',
-        name: 'productSelection',
-        message: 'What product would you like to buy? Enter the ID!',
-
-    }]).then((answer) => {
-        // console.log(`answer: ${answer}`);
-        // console.log(`productSelection: ${answer.productSelection}`)
-        console.log(getQuantity(answer.productSelection))
-            // console.log('quanity: ', quanity)
-
-    })
-}
-
-productSelection()
