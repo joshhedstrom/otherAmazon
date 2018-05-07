@@ -5,11 +5,11 @@ A demonstration of a CLI store inventory system using MySQL and Node.js
 
 If you don't already have Node.js, you can download it [here](https://nodejs.org/en/download/)
 
-You will also need MySQL workbench and server installed. If you don't, [here is the link](https://dev.mysql.com/downloads/installer/). Download it to the default settings. 
+You will also need MySQL workbench and server installed. If you don't already have it, [here is the link](https://dev.mysql.com/downloads/installer/). Download and install it to the default settings. 
 
 ### Installing
 
-Once you've cloned or downloaded this repository to your local machine, navigate in the terminal to the directory and install the dependencies using:
+Once you've cloned or downloaded this repository to your local machine, navigate to it in the terminal to the directory and install the dependencies using:
 
 ```
 npm install
