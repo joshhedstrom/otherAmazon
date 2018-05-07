@@ -9,28 +9,11 @@ const connection = mysql.createConnection({
 });
 
 let itemArray = [];
+let productSelected;
+let quantitySelected;
+let quantityAvailable;
 welcome()
 
-function quantitySelection() {
-    inquirer.prompt([{
-        name: 'quantitySelection',
-        type: 'input',
-        message: 'How many would you like to buy?'
-    }]).then((answer) => {
-        console.log(answer)
-    })
-}
-
-function productSelection() {
-    inquirer.prompt([{
-        name: 'productSelection',
-        type: 'list',
-        choices: itemArray,
-        message: 'What product would you like to buy?'
-    }]).then((answer) => {
-        console.log(answer)
-    })
-}
 
 function welcome() {
     loadItems();
@@ -53,34 +36,65 @@ function loadItems() {
         res.forEach((elem, i) => {
             itemArray.push(`${elem.product_name} || Price: $${elem.price}`);
         });
-        connection.end();
     })
 }
-// loadItems();
 
-function updateQuantity(id, stock) {
+function productSelection() {
+    inquirer.prompt([{
+        name: 'productSelection',
+        type: 'list',
+        choices: itemArray,
+        message: 'What product would you like to buy?'
+    }]).then((answer) => {
+        productSelected = answer.productSelection;
+        quantitySelection()
+    })
+}
+
+function quantitySelection() {
+    inquirer.prompt([{
+        name: 'quantitySelection',
+        type: 'input',
+        message: 'How many would you like to buy?'
+    }]).then((answer) => {
+        quantitySelected = answer.quantitySelection;
+        let splitArr = productSelected.split('||')
+        let item = splitArr[0].trim();
+        getQuantity(item)
+    })
+}
+
+function updateQuantity(name, stock) {
+    console.log(name)
+    console.log(stock)
     connection.query(
         "UPDATE products SET ? WHERE ?", [{
             stock_quantity: stock
         }, {
-            id: id
+            product_name: name
         }],
 
         (err, res) => {
             if (err) return console.log(`ERROR: ${err}`);
         }
     );
-    connection.end();
 }
 
-function getQuantity(id) {
+function getQuantity(name) {
     connection.query('SELECT stock_quantity FROM products WHERE ?', {
-        id: id
+        product_name: name
     }, (err, res) => {
-        if (err) return console.log(`ERROR: ${err}`);
-        quantity = res[0].stock_quantity;
-    });
-    connection.end();
+        if (err) console.log(err)
+        if (res) {
+            quantityAvailable = res[0].stock_quantity;
+            if (quantitySelected < quantityAvailable) {
+                console.log('Order has been placed! Thank you for your business!')
+                let newStock = quantityAvailable - quantitySelected
+                updateQuantity(name, newStock)
+            }
+        }
+    })
+    // connection.end();
 }
 
 function addProduct(name, department, price, stock) {
@@ -95,6 +109,4 @@ function addProduct(name, department, price, stock) {
             if (err) return console.log(`ERROR: ${err}`);
         }
     );
-    connection.end();
 }
-
