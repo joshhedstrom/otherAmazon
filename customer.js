@@ -12,8 +12,8 @@ let itemArray = [];
 let productSelected;
 let quantitySelected;
 let quantityAvailable;
-welcome()
 
+welcome()
 
 function welcome() {
     loadItems();
@@ -94,19 +94,4 @@ function getQuantity(name) {
             }
         }
     })
-    // connection.end();
-}
-
-function addProduct(name, department, price, stock) {
-    connection.query(
-        "INSERT INTO products SET ?", {
-            product_name: name,
-            department_name: department,
-            price: startingBid,
-            stock_quantity: stock
-        },
-        (err, res) => {
-            if (err) return console.log(`ERROR: ${err}`);
-        }
-    );
 }
