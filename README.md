@@ -63,9 +63,13 @@ node customer.js
 ```
 
 ![Step One](./one.jpg?raw=true "The Welcome Page")
-![Step Two(./two.jpg?raw=true "Choose a product")
-![Step Three(./three.jpg?raw=true "Choose a Quantity")
-![Step Four(./four.jpg?raw=true "Continue Shopping")
+
+![Step Two](./two.jpg?raw=true "Choose a product")
+
+![Step Three](./three.jpg?raw=true "Choose a Quantity")
+
+![Step Four](./four.jpg?raw=true "Continue Shopping")
+
 
 If you 'buy' any products it will update the inventory accordingly.
 
