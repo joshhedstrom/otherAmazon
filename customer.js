@@ -87,7 +87,7 @@ function getQuantity(name) {
         if (err) console.log(err)
         if (res) {
             quantityAvailable = res[0].stock_quantity;
-            if (quantitySelected =< quantityAvailable) {
+            if (quantitySelected <= quantityAvailable) {
                 console.log('Order has been placed! Thank you for your business!')
                 let newStock = quantityAvailable - quantitySelected
                 updateQuantity(name, newStock)
@@ -95,6 +95,8 @@ function getQuantity(name) {
             else if(quantitySelected > quantityAvailable){
                 console.log("I'm sorry, but the quantity you requested is not available. Please check back later")
             }
+            console.log('-------------------------------------------------------------------------------------------------')
+            productSelection();
         }
     })
 }
