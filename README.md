@@ -62,6 +62,11 @@ Go back to the directory and run the program in the terminal by typing:
 node customer.js
 ```
 
+![Step One](./one.jpg?raw=true "The Welcome Page")
+![Step Two(./two.jpg?raw=true "Choose a product")
+![Step Three(./three.jpg?raw=true "Choose a Quantity")
+![Step Four(./four.jpg?raw=true "Continue Shopping")
+
 If you 'buy' any products it will update the inventory accordingly.
 
 Let me know if you have any questions or bugs that you notice!
